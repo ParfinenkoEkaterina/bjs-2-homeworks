@@ -43,7 +43,7 @@ function differenceMaxMinWorker(...arr) {
 		if (arr[i] < min) {
 			min = arr[i];
 		}
-		return max - min;
+		return (max - min);
 	}
 }
 
@@ -51,14 +51,15 @@ function differenceEvenOddWorker(...arr) {
 	if (arr.length === 0) return 0;
 	let sumEvenElement = 0;
 	let sumOddElement = 0;
-    for (let i = o; i < arr.length; i++) {
-		if (arr[i] % 2 === 0) {
-			sumEvenElement += arr[i];
-		} else {
+    for (let i = 0; i < arr.length; i++) {
+		if (arr[i] % 2 !== 0) {
 			sumOddElement += arr[i];
+		} else if (arr[i] % 2 === 0) {
+			sumEvenElement += arr[i];
 		}
 	}
-	return sumEvenElement - sumOddElement;
+	let diff = sumEvenElement - sumOddElement;
+	return diff;
 }
 
 function averageEvenElementsWorker(...arr) {
