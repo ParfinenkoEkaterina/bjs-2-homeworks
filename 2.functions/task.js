@@ -13,7 +13,7 @@ function getArrayParams(...arr) {
 			min = arr[i];
 		}
 	}
-	avg = average((sum / arr.length).toFixed(2));
+	avg = parseFloat((sum / arr.length).toFixed(2));
 
 	return {
 		min: min,
@@ -34,8 +34,8 @@ function summElementsWorker(...arr) {
 
 function differenceMaxMinWorker(...arr) {
 	if (arr.length === 0) return 0;
-	let max = arr[0];
-	let min = arr[0];
+	let max = -Infinity;
+	let min = Infinity;
 	for (let i = 1; i < arr.length; i++) {
 		if (arr[i] > max) {
 			max = arr[i];
@@ -72,8 +72,8 @@ function averageEvenElementsWorker(...arr) {
 			countEvenElement++;
 		}
 	}
-	if (countEvenElement === 0) return 0;
-	return (sumEvenElement / countEvenElement).toFixed(2);
+	let aver = sumEvenElement / countEvenElement;
+    return aver;
 }
 
 //Задача 3
