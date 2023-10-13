@@ -80,8 +80,13 @@ class PrintEditionItem {
      }
     }
 
-    findBookBy(type,value) {
-     return this.books.find(book => book[tipe] === value);
+    findBookBy(type, value) {
+     for (const book of this.books) {
+      if (book[type] === value) {
+        return book;
+      }
+     }
+     return null;
     }
 
     giveBookByName(bookName) {
