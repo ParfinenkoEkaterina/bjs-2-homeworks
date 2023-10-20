@@ -1,3 +1,5 @@
+"use script";
+
 class AlarmClock {
 	constructor() {
 		this.alarmCollection = [];
@@ -6,19 +8,17 @@ class AlarmClock {
 
 	addClock(time, callback) {
 
-		if (time === null || callback === undefined) {
+		if (!time || !callback) {
 			throw new Error('Отсутствуют обязательные аргументы');
 		}
 
-		for (let i = 0; i < this.alarmCollection.length; i += 1) {
-			if (time === this.alarmCollection[i].time) {
-				console.warn('Уже присутствует звонок на это же время');
-			}
+		if (this.alarmCollection.find(alarm => alarm.time === time)) {
+			console.warn('Уже присутствует звонок на это же время');
 		}
 
 		this.alarmCollection.push({
-			callback: callback,
-			time: time,
+			callback,
+			time,
 			canCall: true,
 		});
 	}
