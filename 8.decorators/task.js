@@ -1,45 +1,54 @@
-// //Задача № 1
+"use script";
+
+//Задача № 1
 
 function cachingDecoratorNew(func) {
-    const cache = [];
-    function wrapper(...args) {
-        const hash = md5(args);
-        let objInCache = cache.find((item) => item.hash === hash);
-        if (objInCache) {
-            console.log(`Из кеша: ${objInCache.value}`);
-            return `Из кеша: ${objInCache.value}`;
-        }
+	const cache = [];
 
-        let result = func(...args);
-        cache.push({ hash: hash, value: result });
-        if (cache.length > 5) {
-            cache.shift();
-        }
-        console.log("Вычисляем: " + result);
-        return "Вычисляем: " + result;
+	function wrapper(...args) {
+		const hash = md5(args);
 
-    }
-    return wrapper;
+		const objectInCache = cache.find((item) => item.hash === hash);
+		if (objectInCache) {
+			return "Из кеша: " + objectInCache.value;
+		}
+
+		let result = func(...args);
+		cache.push({
+			hash: hash,
+			value: result
+		});
+		if (cache.length > 5) {
+			cache.shift();
+		}
+		console.log("Вычисляем: " + result);
+		return "Вычисляем: " + result;
+	}
+	return wrapper;
 }
 
+//Задача № 2
 
-// //Задача № 2
+function debounceDecoratorNew(func, delay) {
+	let timeoutId = null;
+	wrapper.count = 0;
+	wrapper.allCount = 0;
 
-function debounceDecoratorNew(fn, delay) {
-    let timeoutId = null;
-    wrapper.count = 0;
-    wrapper.allCount = 0;
-    function wrapper(...args) {
-        wrapper.allCount++;
-        if (timeoutId === null) {
-            fn.apply(this, args);
-            wrapper.count++;
-        }
-        clearTimeout(timeoutId);
-        timeoutId = setTimeout(() => {
-            fn.apply(this, args);
-            wrapper.count++;
-        },delay);
-    }
-    return wrapper;
+	function wrapper(...args) {
+		wrapper.allCount++;
+
+		if (timeoutId) {
+			clearTimeout(timeoutId);
+
+		} else {
+			func(args);
+			wrapper.count++;
+		}
+
+		timeoutId = setTimeout(() => {
+			func(args);
+			wrapper.count++;
+		}, delay);
+	}
+	return wrapper;
 }
